@@ -1,0 +1,1 @@
+# NETForum.CleanArchitecture
