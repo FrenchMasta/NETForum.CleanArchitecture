@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\Repositories\" />
+    <Folder Include="Behaviours\" />
   </ItemGroup>
 
 </Project>

@@ -10,8 +10,8 @@ ConfigureEndpointDiscoverability(builder);
 ConfigureSwaggerGenSetup(builder);
 
 builder.Services
-    .AddApplication()
-    .AddInfrastructure()
+    .AddApplicationServices()
+    .AddInfrastructureServices()
     .AddPresentation();
 
 var app = builder.Build();
