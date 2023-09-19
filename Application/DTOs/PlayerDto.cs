@@ -1,7 +1,7 @@
 ﻿using Domain.Enums;
 using Domain.Helpers;
 
-namespace Domain.DTOs;
+namespace Application.DTOs;
 
 // Show what a "sealed" class (Player) will do
 //public sealed class PlayerDto : Player
