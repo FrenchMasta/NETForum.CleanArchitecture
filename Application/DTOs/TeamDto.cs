@@ -1,17 +1,13 @@
-﻿using Application.Mappings;
-using AutoMapper;
-using Domain.Models;
+﻿namespace Application.DTOs;
 
-namespace Application.DTOs;
-
-public class TeamDto : IMapFrom<Team>
+public class TeamDto
 {
-    public long Id { get; private set; }
-    public string Name { get; private set; }
-    public string KnownAs { get; private set; }
-    public List<PlayerDto> Players { get; private set; }
+    public long Id { get; set; }
+    public string Name { get; set; }
+    public string KnownAs { get; set; }
+    public List<PlayerDto> Players { get; set; }
 
-    private void SetTeamAlias()
+    public void SetTeamAlias()
     {
         KnownAs = Name switch
         {
@@ -21,13 +17,5 @@ public class TeamDto : IMapFrom<Team>
             "Liverpool" => "Need to keep this PG13 - Just call them kak",
             _ => Name
         };
-    }
-
-    public void Mapping(Profile profile)
-    {
-        profile.CreateMap<Team, TeamDto>()
-            .ForMember(destination => destination.Players, 
-                options => options.MapFrom(source => source.Players))
-            .AfterMap((source, destination) => destination.SetTeamAlias());
     }
 }
