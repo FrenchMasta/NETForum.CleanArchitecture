@@ -5,6 +5,8 @@ using Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddHttpContextAccessor();
+
 ConfigureEndpointDiscoverability(builder);
 
 ConfigureSwaggerGenSetup(builder);
