@@ -1,44 +1,36 @@
 ﻿using Application.DTOs;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
-using Domain.Models;
+using AutoMapper;
 
 namespace Infrastructure.Services;
 
 public class PlayerService : IPlayerService
 {
     private readonly IPlayerRepository _playerRepository;
+    private readonly IMapper _mapper;
 
-    public PlayerService(IPlayerRepository playerRepository)
+    public PlayerService(IPlayerRepository playerRepository, IMapper mapper)
     {
         _playerRepository = playerRepository;
+        _mapper = mapper;
     }
 
     public List<PlayerDto> GetAllPlayers()
     {
         var players = _playerRepository.GetAll();
-        return MapToPlayerDtoCollection(players);
+        return _mapper.Map<List<PlayerDto>>(players);
     }
 
     public List<PlayerDto> GetAllPlayersForTeam(string teamName)
     {
         var players = _playerRepository.GetByTeamName(teamName);
-        return MapToPlayerDtoCollection(players);
+        return _mapper.Map<List<PlayerDto>>(players);
     }
 
     public PlayerDto? GetPlayerById(long id)
     {
         var player = _playerRepository.GetById(id);
-        return player == null ? null : MapToPlayerDto(player);
-    }
-
-    private static List<PlayerDto> MapToPlayerDtoCollection(IEnumerable<Player> players)
-    {
-        return players.Select(MapToPlayerDto).ToList();
-    }
-
-    private static PlayerDto MapToPlayerDto(Player player)
-    {
-        return new PlayerDto(player.Id, player.FirstName, player.LastName, player.PlayerPosition, player.ShirtNumber);
+        return player == null ? null : _mapper.Map<PlayerDto>(player);
     }
 }

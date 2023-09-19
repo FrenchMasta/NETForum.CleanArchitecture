@@ -1,5 +1,7 @@
-﻿using Domain.Enums;
+﻿using Application.Mappings;
+using AutoMapper;
 using Domain.Helpers;
+using Domain.Models;
 
 namespace Application.DTOs;
 
@@ -8,20 +10,18 @@ namespace Application.DTOs;
 //{
 //}
 
-public class PlayerDto
+public class PlayerDto : IMapFrom<Player>
 {
-    public PlayerDto(long id, string firstName, string lastName, PlayerPosition playerPosition, int shirtNumber)
-    {
-        Id = id;
-        FirstName = firstName;
-        LastName = lastName;
-        PlayerPosition = EnumHelper.GetEnumDescription(playerPosition);
-        ShirtNumber = shirtNumber;
-    }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public int ShirtNumber { get; set; }
+    public string PlayerPosition { get; set; }
 
-    public long Id { get; }
-    public string FirstName { get; }
-    public string LastName { get; }
-    public int ShirtNumber { get; }
-    public string PlayerPosition { get; }
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<Player, PlayerDto>()
+            .ForMember(destination => destination.PlayerPosition,
+                options =>
+                    options.MapFrom(source => EnumHelper.GetEnumDescription(source.PlayerPosition)));
+    }
 }

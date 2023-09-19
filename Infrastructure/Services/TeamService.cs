@@ -1,59 +1,36 @@
 ﻿using Application.DTOs;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
-using Domain.Models;
+using AutoMapper;
 
 namespace Infrastructure.Services;
 
 public class TeamService : ITeamService
 {
     private readonly ITeamRepository _teamRepository;
+    private readonly IMapper _mapper;
 
-    public TeamService(ITeamRepository teamRepository)
+    public TeamService(ITeamRepository teamRepository, IMapper mapper)
     {
         _teamRepository = teamRepository;
+        _mapper = mapper;
     }
 
     public List<TeamDto> GetAllTeams()
     {
         var teams = _teamRepository.GetAll();
-        return MapToTeamDtoCollection(teams);
+        return _mapper.Map<List<TeamDto>>(teams);
     }
 
     public TeamDto? GetByTeamName(string teamName)
     {
         var team = _teamRepository.GetByTeamName(teamName);
-        return team == null ? null : MapToTeamDto(team);
+        return team == null ? null : _mapper.Map<TeamDto>(team);
     }
 
     public TeamDto? GetByTeamId(long id)
     {
         var team = _teamRepository.GetById(id);
-        return team == null ? null : MapToTeamDto(team);
+        return team == null ? null : _mapper.Map<TeamDto>(team);
     }
-
-    #region Private Methods - Mapping
-
-    private static List<TeamDto> MapToTeamDtoCollection(IEnumerable<Team> teams)
-    {
-        return teams.Select(MapToTeamDto).ToList();
-    }
-
-    private static TeamDto MapToTeamDto(Team team)
-    {
-        var mappedPlayers = MapToPlayerDtoCollection(team.Players);
-        return new TeamDto(team.Id, team.Name, mappedPlayers);
-    }
-
-    private static List<PlayerDto> MapToPlayerDtoCollection(IEnumerable<Player> players)
-    {
-        return players.Select(MapToPlayerDto).ToList();
-    }
-
-    private static PlayerDto MapToPlayerDto(Player player)
-    {
-        return new PlayerDto(player.Id, player.FirstName, player.LastName, player.PlayerPosition, player.ShirtNumber);
-    }
-
-    #endregion
 }
