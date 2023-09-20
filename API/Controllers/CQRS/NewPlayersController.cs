@@ -1,7 +1,8 @@
 ﻿using API.Controllers.Common;
 using Application.DTOs;
-using Application.Queries.Player.GetPlayerDtoByName;
-using Application.Queries.Player.GetPlayerDtos;
+using Application.Queries.Player.GetPlayerById;
+using Application.Queries.Player.GetPlayers;
+using Application.Queries.Player.GetPlayersByName;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -17,7 +18,7 @@ public class NewPlayersController : ApiControllerBase
     [SwaggerResponse(StatusCodes.Status200OK, "Successfully retrieved the list of all players.", typeof(List<PlayerDto>))]
     public async Task<ActionResult<List<PlayerDto>>> GetAllUsingMediatr()
     {
-        return await Mediatr.Send(new GetPlayerDtosQuery());
+        return await Mediatr.Send(new GetPlayersQuery());
     }
 
     [HttpGet("CQRS/team/{teamName}")]
@@ -28,7 +29,7 @@ public class NewPlayersController : ApiControllerBase
     [SwaggerResponse(StatusCodes.Status200OK, "Successfully retrieved the list of players for the specified team.", typeof(List<PlayerDto>))]
     public async Task<ActionResult<List<PlayerDto>>> GetByTeamUsingMediatr([FromRoute] string teamName)
     {
-        return await Mediatr.Send(new GetPlayerDtosByNameQuery { TeamName = teamName });
+        return await Mediatr.Send(new GetPlayersByNameQuery(teamName));
     }
 
     [HttpGet("CQRS/{id}")]
@@ -40,6 +41,6 @@ public class NewPlayersController : ApiControllerBase
     [SwaggerResponse(StatusCodes.Status404NotFound, "Player with the specified ID was not found.")]
     public async Task<ActionResult<PlayerDto>> GetByIdUsingMediatr([FromRoute] long id)
     {
-        return await Mediatr.Send(new GetPlayerDtoByIdQuery { Id = id });
+        return await Mediatr.Send(new GetPlayerByIdQuery(id));
     }
 }

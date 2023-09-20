@@ -1,16 +1,16 @@
 ﻿using FluentValidation;
 using System.Linq.Expressions;
 
-namespace Application.Queries.Player.GetPlayerDtoByName;
+namespace Application.Queries.Player.GetPlayersByName;
 
-public class GetPlayerDtosByNameQueryValidator : AbstractValidator<GetPlayerDtosByNameQuery>
+public class GetPlayersByNameQueryValidator : AbstractValidator<GetPlayersByNameQuery>
 {
     private const string ThatKakTeamWeAllDoNotLike = "LIVERPOOL";
     private const string NoIssuesEvenAfterChargesAre115 = "MANCHESTER CITY";
 
-    public GetPlayerDtosByNameQueryValidator()
+    public GetPlayersByNameQueryValidator()
     {
-        Expression<Func<GetPlayerDtosByNameQuery, string>> trimmedTeamName = x => x.TeamName.Trim();
+        Expression<Func<GetPlayersByNameQuery, string>> trimmedTeamName = x => x.TeamName.Trim();
 
         RuleFor(trimmedTeamName)
             .NotEmpty()
