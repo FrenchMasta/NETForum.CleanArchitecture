@@ -13,6 +13,13 @@ public class MockDatabase
         SetupDatabase();
     }
 
+    public void SaveChanges()
+    {
+        // do cool db things
+
+        return;
+    }
+
     private void SetupDatabase()
     {
         SetupPlayers();

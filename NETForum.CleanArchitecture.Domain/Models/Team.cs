@@ -2,7 +2,7 @@
 
 namespace Domain.Models;
 
-public class Team : EntityBase
+public sealed class Team : EntityBase
 {
     public string Name { get; set; }
     public List<Player> Players { get; set; } = new();

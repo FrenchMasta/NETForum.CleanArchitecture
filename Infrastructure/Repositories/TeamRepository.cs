@@ -30,4 +30,9 @@ public class TeamRepository : ITeamRepository
     {
         return _mockDatabase.Teams.Find(player => player.Id == id);
     }
+
+    public void SaveChanges()
+    {
+        _mockDatabase.SaveChanges();
+    }
 }

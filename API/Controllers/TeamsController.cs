@@ -1,5 +1,8 @@
-﻿using Application.DTOs;
+﻿using API.Controllers.Common;
+using Application.Commands.Team.TransferPlayerToTeam;
+using Application.Exceptions;
 using Application.Interfaces.Services;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -7,89 +10,32 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TeamsController : ControllerBase
+    public class TeamsController : ApiControllerBase
     {
-        private readonly ITeamService _teamService;
-
-        public TeamsController(ITeamService teamService)
+        
+        public TeamsController(ISender mediator)
         {
-            _teamService = teamService;
+            _mediatr = mediator;
         }
 
-        [HttpGet]
+        [HttpPut("{id}/transfer/{playerId}")]
         [SwaggerOperation(
-            Summary = "Get all teams",
-            Description = "Returns a list of all teams."
+            Summary = "Transfer a player to a team",
+            Description = "Transfers a specified player from their current team to a specified team"
         )]
-        [SwaggerResponse(StatusCodes.Status200OK, "Successfully retrieved the list of all teams.", typeof(List<TeamDto>))]
-        public ActionResult<List<TeamDto>> GetAllTeams()
+        [SwaggerResponse(StatusCodes.Status204NoContent, "Successfully transferred the player")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Team or Player not found")]
+        public async Task<ActionResult> TransferPlayer([FromRoute] long id, [FromRoute] long playerId)
         {
+            var command = new TransferPlayerToTeamCommand(playerId, id);
             try
             {
-                var teams = _teamService.GetAllTeams();
-
-                if (!teams.Any())
-                {
-                    return NoContent();
-                }
-
-                return Ok(teams);
+                await _mediatr.Send(command);
+                return NoContent();
             }
-            catch (Exception exception)
+            catch (NotFoundException)
             {
-                return BadRequest(exception.Message);
-            }
-        }
-
-        [HttpGet("team/{teamName}")]
-        [SwaggerOperation(
-            Summary = "Get a team by name",
-            Description = "Returns a team with the specified name."
-        )]
-        [SwaggerResponse(StatusCodes.Status200OK, "Successfully retrieved the team with the specified name.", typeof(TeamDto))]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Team with the specified name was not found.")]
-        public ActionResult<TeamDto> GetByTeamName([FromRoute] string teamName)
-        {
-            try
-            {
-                var team = _teamService.GetByTeamName(teamName);
-
-                if (team == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(team);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
-        }
-
-        [HttpGet("{id}")]
-        [SwaggerOperation(
-            Summary = "Get a team by ID",
-            Description = "Returns a team with the specified unique identifier."
-        )]
-        [SwaggerResponse(StatusCodes.Status200OK, "Successfully retrieved the team with the specified ID.", typeof(TeamDto))]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Team with the specified ID was not found.")]
-        public ActionResult<TeamDto> GetByTeamId([FromRoute] long id)
-        {
-            try
-            {
-                var team = _teamService.GetByTeamId(id);
-
-                if (team == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(team);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
+                return NotFound();
             }
         }
     }

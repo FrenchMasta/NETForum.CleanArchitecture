@@ -32,4 +32,9 @@ public class PlayerRepository : IPlayerRepository
     {
         return _mockDatabase.Players.Find(player => player.Id == id);
     }
+
+    public void SaveChanges()
+    {
+        _mockDatabase.SaveChanges();
+    }
 }
