@@ -5,8 +5,8 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace API.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class PlayersController : ControllerBase
 {
     private readonly IPlayerService _playerService;
@@ -40,7 +40,6 @@ public class PlayersController : ControllerBase
             return BadRequest(exception.Message);
         }
     }
-
 
     [HttpGet("team/{teamName}")]
     [SwaggerOperation(

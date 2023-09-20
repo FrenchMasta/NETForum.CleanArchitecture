@@ -2,21 +2,12 @@
 
 public class TeamDto
 {
-    public TeamDto(long id, string name, List<PlayerDto> playerDtoCollection)
-    {
-        Id = id;
-        Name = name;
-        Players = playerDtoCollection;
-
-        SetTeamAlias();
-    }
-
-    public long Id { get; }
-    public string Name { get; }
+    public long Id { get; set; }
+    public string Name { get; set; }
     public string KnownAs { get; set; }
-    public List<PlayerDto> Players { get; }
+    public List<PlayerDto> Players { get; set; }
 
-    private void SetTeamAlias()
+    public void SetTeamAlias()
     {
         KnownAs = Name switch
         {
