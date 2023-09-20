@@ -17,7 +17,7 @@ public class CustomValidationException : Exception
             .GroupBy(validationFailure => validationFailure.PropertyName,
                 validationFailure => validationFailure.ErrorMessage)
 
-            .ToDictionary(failureGroup => failureGroup.Key, 
+            .ToDictionary(failureGroup => failureGroup.Key,
                 failureGroup => failureGroup.ToArray());
     }
 }
