@@ -1,9 +1,11 @@
-﻿using MediatR;
+﻿using API.Filters;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Common;
 
 [ApiController]
+[CustomApiExceptionFilter]
 [Route("api/[controller]")]
 public class ApiControllerBase : ControllerBase
 {
