@@ -43,8 +43,8 @@ void ConfigureSwaggerGenSetup(WebApplicationBuilder webApplicationBuilder)
         options.SwaggerDoc("v1", new OpenApiInfo
         {
             Title = ".NET Forum - Clean Architecture",
-            Version = "v1",
-            Description = "The following are the API endpoints for the .NET Forum - Clean Architecture presentation"
+            Version = "v2",
+            Description = "The following are the API endpoints for the .NET Forum - Clean Architecture presentation - now using libraries to abstract responsibilities"
         });
         options.EnableAnnotations();
     });
