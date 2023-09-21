@@ -21,8 +21,6 @@ var app = builder.Build();
 ConfigureSwaggerUISetup(app);
 
 app.UseHttpsRedirection();
-
-// NB!! YOU NEED THIS FOR API ENDPOINTS TO BE RESOLVED
 app.MapControllers();
 
 app.Run();
@@ -45,9 +43,10 @@ void ConfigureSwaggerGenSetup(WebApplicationBuilder webApplicationBuilder)
         options.SwaggerDoc("v1", new OpenApiInfo
         {
             Title = ".NET Forum - Clean Architecture",
-            Version = "v1",
-            Description = "The following are the API endpoints for the .NET Forum - Clean Architecture presentation"
+            Version = "v3",
+            Description = "The following are the API endpoints for the .NET Forum - Clean Architecture presentation - now with tests"
         });
+        options.EnableAnnotations();
     });
 }
 
