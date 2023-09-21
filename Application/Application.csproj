@@ -19,6 +19,9 @@
 
   <ItemGroup>
     <Folder Include="Behaviours\" />
+    <Folder Include="Commands\Player\" />
+    <Folder Include="Interfaces\Repositories\" />
+    <Folder Include="ServiceResults\" />
   </ItemGroup>
 
 </Project>

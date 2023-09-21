@@ -33,6 +33,17 @@ public class PlayerRepository : IPlayerRepository
         return _mockDatabase.Players.Find(player => player.Id == id);
     }
 
+    public long CreatePlayer(Player player)
+    {
+        // Hack to simulate automatic DB Id on creation
+        var playerId = 42;
+
+        player.Id = playerId;
+        _mockDatabase.Players.Add(player);
+
+        return playerId;
+    }
+
     public void SaveChanges()
     {
         _mockDatabase.SaveChanges();

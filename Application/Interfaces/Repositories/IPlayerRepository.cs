@@ -7,5 +7,7 @@ public interface IPlayerRepository
     List<Player> GetAll();
     List<Player> GetByTeamName(string teamName);
     Player? GetById(long id);
+
+    long CreatePlayer(Player player);
     void SaveChanges();
 }

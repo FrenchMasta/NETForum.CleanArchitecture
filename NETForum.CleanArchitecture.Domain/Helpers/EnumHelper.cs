@@ -16,4 +16,17 @@ public static class EnumHelper
 
         return attributes.Length > 0 ? attributes[0].Description : value.ToString();
     }
+
+    public static T GetEnumValueFromDescription<T>(string description) where T : Enum
+    {
+        foreach (T enumValue in Enum.GetValues(typeof(T)))
+        {
+            if (GetEnumDescription(enumValue) == description)
+            {
+                return enumValue;
+            }
+        }
+
+        throw new ArgumentException($"Enum value with description '{description}' not found.");
+    }
 }
