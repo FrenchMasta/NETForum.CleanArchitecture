@@ -1,8 +1,10 @@
 ﻿using API.Controllers.Common;
+using Application.Commands.Player;
 using Application.DTOs;
 using Application.Queries.Player.GetPlayerById;
 using Application.Queries.Player.GetPlayers;
 using Application.Queries.Player.GetPlayersByName;
+using Application.ServiceResults;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -34,7 +36,7 @@ public class NewPlayersController : ApiControllerBase
 
     [HttpGet("CQRS/{id}")]
     [SwaggerOperation(
-        Summary = "Get a player by ID  (using MediatR)",
+        Summary = "Get a player by ID (using MediatR)",
         Description = "Returns a player with the specified unique identifier."
     )]
     [SwaggerResponse(StatusCodes.Status200OK, "Successfully retrieved the player with the specified ID.", typeof(PlayerDto))]
@@ -42,5 +44,16 @@ public class NewPlayersController : ApiControllerBase
     public async Task<ActionResult<PlayerDto>> GetByIdUsingMediatr([FromRoute] long id)
     {
         return await Mediatr.Send(new GetPlayerByIdQuery(id));
+    }
+
+    [HttpPost]
+    [SwaggerOperation(
+        Summary = "Add a new player (using MediatR)",
+        Description = "Add a new player that is a free-agent"
+    )]
+    [SwaggerResponse(StatusCodes.Status200OK, "Successfully created a new player.", typeof(int))]
+    public async Task<ActionResult<Created>> CreatePlayer([FromBody] PlayerDto playerDto)
+    {
+        return await Mediatr.Send(new AddPlayerCommand(playerDto));
     }
 }

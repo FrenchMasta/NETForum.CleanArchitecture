@@ -17,8 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\Player\" />
     <Folder Include="Interfaces\Repositories\" />
     <Folder Include="Behaviours\" />
+    <Folder Include="ServiceResults\" />
   </ItemGroup>
 
 </Project>

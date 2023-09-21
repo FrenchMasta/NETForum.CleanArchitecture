@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using AutoMapper;
+using Domain.Enums;
 using Domain.Helpers;
 using Domain.Models;
 
@@ -10,6 +11,7 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMappingProfileToPlayerDto();
+        CreateMappingProfileToPlayer();
         CreateMappingProfileToTeamDto();
     }
 
@@ -19,6 +21,14 @@ public class MappingProfile : Profile
             .ForMember(destination => destination.PlayerPosition,
                 options =>
                     options.MapFrom(source => EnumHelper.GetEnumDescription(source.PlayerPosition)));
+    }
+
+    private void CreateMappingProfileToPlayer()
+    {
+        CreateMap<PlayerDto, Player>()
+            .ForMember(destination => destination.PlayerPosition,
+                options =>
+                    options.MapFrom(source => EnumHelper.GetEnumValueFromDescription<PlayerPosition>(source.PlayerPosition)));
     }
 
     private void CreateMappingProfileToTeamDto()
