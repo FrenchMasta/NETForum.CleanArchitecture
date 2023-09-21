@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.Repositories;
-using Application.Queries.Player.GetPlayerDtos;
+using Application.Queries.Player.GetPlayers;
 using Application.Tests.Abstractions;
 using Domain.Enums;
 using FakeItEasy;
@@ -33,9 +33,9 @@ namespace Application.Tests.Queries.Player.GetPlayerDtos
 
             A.CallTo(() => fakePlayerRepository.GetAll()).Returns(fakePlayers);
 
-            var handler = new GetPlayerDtosQueryHandler(fakePlayerRepository, Mapper);
+            var handler = new GetPlayersQueryHandler(fakePlayerRepository, Mapper);
 
-            var fakeRequest = A.Fake<GetPlayerDtosQuery>();
+            var fakeRequest = A.Fake<GetPlayersQuery>();
 
             var expectedPlayerDtoCount = 2;
 
@@ -66,9 +66,9 @@ namespace Application.Tests.Queries.Player.GetPlayerDtos
 
             A.CallTo(() => fakePlayerRepository.GetAll()).Returns(fakePlayers);
 
-            var handler = new GetPlayerDtosQueryHandler(fakePlayerRepository, Mapper);
+            var handler = new GetPlayersQueryHandler(fakePlayerRepository, Mapper);
 
-            var fakeRequest = A.Fake<GetPlayerDtosQuery>();
+            var fakeRequest = A.Fake<GetPlayersQuery>();
 
             // act
             var sut = await handler.Handle(fakeRequest, CancellationToken.None);

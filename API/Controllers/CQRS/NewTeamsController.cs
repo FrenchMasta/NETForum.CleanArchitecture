@@ -28,7 +28,7 @@ public class NewTeamsController : ApiControllerBase
         var command = new TransferPlayerToTeamCommand(playerId, id);
         try
         {
-            await _mediatr.Send(command);
+            await Mediatr.Send(command);
             return NoContent();
         }
         catch (NotFoundException)
