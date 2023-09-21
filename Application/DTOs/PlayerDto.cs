@@ -1,6 +1,6 @@
 ﻿namespace Application.DTOs;
 
-// Show what a "sealed" class (Player) will do
+// TODO: Show what a "sealed" class (Player) will do
 //public sealed class PlayerDto : Player
 //{
 //}
