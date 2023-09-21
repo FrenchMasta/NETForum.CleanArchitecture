@@ -19,8 +19,6 @@ var app = builder.Build();
 ConfigureSwaggerUISetup(app);
 
 app.UseHttpsRedirection();
-
-// NB!! YOU NEED THIS FOR API ENDPOINTS TO BE RESOLVED
 app.MapControllers();
 
 app.Run();
@@ -28,11 +26,11 @@ app.Run();
 return;
 
 
-void ConfigureEndpointDiscoverability(WebApplicationBuilder builder1)
+void ConfigureEndpointDiscoverability(WebApplicationBuilder webApplicationBuilder)
 {
     // For minimal APIs - SEE: https://stackoverflow.com/questions/71932980/what-is-addendpointsapiexplorer-in-asp-net-core-6/71933535#71933535
-    builder1.Services.AddEndpointsApiExplorer();
-    builder1.Services.AddControllers();
+    webApplicationBuilder.Services.AddEndpointsApiExplorer();
+    webApplicationBuilder.Services.AddControllers();
 }
 
 void ConfigureSwaggerGenSetup(WebApplicationBuilder webApplicationBuilder)
@@ -46,6 +44,7 @@ void ConfigureSwaggerGenSetup(WebApplicationBuilder webApplicationBuilder)
             Version = "v1",
             Description = "The following are the API endpoints for the .NET Forum - Clean Architecture presentation"
         });
+        options.EnableAnnotations();
     });
 }
 
